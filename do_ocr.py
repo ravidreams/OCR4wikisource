@@ -15,7 +15,7 @@ import urllib2
 import os.path
 
 
-version = "1.57"
+version = "1.58"
 
 
 config = ConfigParser.ConfigParser()
@@ -53,10 +53,10 @@ logger.addHandler(handler)
 
 
 
-latest_version =  urllib2.urlopen('https://raw.githubusercontent.com/tshrinivasan/OCR4wikisource/master/VERSION').read().strip('\n').split(' ')[1]
+latest_version =  urllib2.urlopen('https://raw.githubusercontent.com/ravidreams/OCR4wikisource/master/VERSION').read().strip('\n').split(' ')[1]
 
 if not float(version) == float(latest_version):
-            logger.info("\n\nYour OCR4WikiSource version is " + version + ". This is old. The latest version is " + latest_version + ". Update from https://github.com/tshrinivasan/OCR4wikisource \n\n")
+            logger.info("\n\nYour OCR4WikiSource version is " + version + ". This is old. The latest version is " + latest_version + ". Update from https://github.com/ravidreams/OCR4wikisource \n\n")
             sys.exit()
 
 
