@@ -14,7 +14,7 @@ import logging
 import urllib2
 
 
-version = "1.53"
+version = "1.57"
 
 config = ConfigParser.ConfigParser()
 config.read("config.ini")
@@ -62,10 +62,10 @@ logger.addHandler(handler)
 
 
 
-latest_version =  urllib2.urlopen('https://raw.githubusercontent.com/tshrinivasan/OCR4wikisource/master/VERSION').read().strip('\n').split(' ')[1]
+latest_version =  urllib2.urlopen('https://raw.githubusercontent.com/ravidreams/OCR4wikisource/master/VERSION').read().strip('\n').split(' ')[1]
 
 if not float(version) == float(latest_version):
-            logger.info("\n\nYour OCR4WikiSource version is " + version + ". This is old. The latest version is " + latest_version + ". Update from https://github.com/tshrinivasan/OCR4wikisource \n\n")
+            logger.info("\n\nYour OCR4WikiSource version is " + version + ". This is old. The latest version is " + latest_version + ". Update from https://github.com/ravidreams/OCR4wikisource \n\n")
             sys.exit()
 
 
@@ -233,7 +233,7 @@ for text_file in sorted(files):
 
         move_file(text_file)
         
-logging.info("\nDone. Uploaded all text files to wiki source\n\n\n")
+logging.info("\nDone. Uploaded all text files to Wikisource\n\n\n")
 
                                                         
 
@@ -249,6 +249,9 @@ def clean_folders():
             
             
             command = "mv  all_text_for* OCR* upload-* " + " ./archives/files-for-" + filename
+            os.system(command.encode('utf-8'))
+
+            command = "mv  text-for* " + " ./archives/files-for-" + filename
             os.system(command.encode('utf-8'))
 
             command = "cp -R log " + " ./archives/files-for-" + filename

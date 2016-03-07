@@ -1,5 +1,5 @@
 # Version
-1.53
+1.57
 
 #Note
 This program is evolving heavily.
@@ -13,7 +13,7 @@ Feel free to report any errors in the issues section.
 
 
 There are many PDF files and DJVU files in WikiSource in various languages.
-In many wikisource projects, those files are splited into individual page as an Image, using proofRead extension.
+In many wikisource projects, those files are split into individual page as an Image, using proofRead extension.
 
 Contributors see those images and type them manually.
 

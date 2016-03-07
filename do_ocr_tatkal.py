@@ -53,10 +53,10 @@ logger.addHandler(handler)
 
 
 
-latest_version =  urllib2.urlopen('https://raw.githubusercontent.com/tshrinivasan/OCR4wikisource/master/VERSION').read().strip('\n').split(' ')[1]
+latest_version =  urllib2.urlopen('https://raw.githubusercontent.com/ravidreams/OCR4wikisource/master/VERSION').read().strip('\n').split(' ')[1]
 
 if not float(version) == float(latest_version):
-            logger.info("\n\nYour OCR4WikiSource version is " + version + ". This is old. The latest version is " + latest_version + ". Update from https://github.com/tshrinivasan/OCR4wikisource \n\n")
+            logger.info("\n\nYour OCR4WikiSource version is " + version + ". This is old. The latest version is " + latest_version + ". Update from https://github.com/ravidreams/OCR4wikisource \n\n")
             sys.exit()
 
 
@@ -81,7 +81,6 @@ wiki_username = config.get('settings','wiki_username')
 wiki_password = config.get('settings','wiki_password')
 wikisource_language_code = config.get('settings','wikisource_language_code')
 keep_temp_folder_in_google_drive = config.get('settings','keep_temp_folder_in_google_drive')
-delay = config.get('settings','delay')
 #start_page = config.get('settings','start_page')
 #end_page = config.get('settings','end_page')
 
@@ -93,7 +92,6 @@ logger.info("Wiki Username = " + wiki_username)
 logger.info("Wiki Password = " + "Not logging the password")
 logger.info("Wiki Source Language Code = " + wikisource_language_code )
 logger.info("Keep Temp folder in  Google Drive = " + keep_temp_folder_in_google_drive)
-logger.info("Delay = " + delay)
 #logger.info("Start Page = " + str(start_page))
 #logger.info("End Page = " + str(end_page))
 
@@ -236,12 +234,6 @@ def move_file(file):
                 shutil.move(source,destination)
         message =  "Moving the file " + file + " to the folder " + temp_folder + "\n"
         logger.info(message)
-
-
-#Pause the tool while running many parallel sessions
-
-delay = float(delay)
-time.sleep(delay)
 
 
 # Create a temp folder in google drive to upload the files. You can delete this folder later.
