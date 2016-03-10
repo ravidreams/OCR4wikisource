@@ -14,7 +14,7 @@ import logging
 import urllib2
 
 
-version = "1.58"
+version = "1.59"
 
 config = ConfigParser.ConfigParser()
 config.read("config.ini")
@@ -274,3 +274,5 @@ handler.close()
 time.sleep(1)
 
 clean_folders()
+
+sys.exit()

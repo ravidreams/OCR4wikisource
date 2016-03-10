@@ -15,7 +15,7 @@ import urllib2
 import os.path
 
 
-version = "1.58"
+version = "1.59"
 
 
 config = ConfigParser.ConfigParser()
@@ -115,114 +115,7 @@ logger.info("Created Temp folder " + temp_folder)
 
 if not os.path.isdir(temp_folder):
       os.mkdir(temp_folder)
-                            
-
-
-
-if os.path.isfile(filename):
-            logging.info(filename + " Already Exists. Skipping the download.")
-
-else:
-            print "\n\nDownloading the file " + filename + "\n\n"
-
-            logger.info("Downloading the file " + filename )
-
-            #Download the file
-
-            r = requests.get(url, stream=True)
-            with open(filename, 'wb') as f:
-                        total_length = int(r.headers.get('content-length'))
-                        for chunk in progress.bar(r.iter_content(chunk_size=1024), expected_size=(total_length/1024) + 1):
-                                    if chunk:
-                                                f.write(chunk)
-                                                f.flush()
-
-
-            logger.info("Download Completed")
-
-
-
-
-# Convert djvu to PDF
-
-if filetype.lower() == "djvu" :
-
-            if os.path.isfile(filename.split('.')[0] + ".pdf"):
-                        logging.info("Found PDF version. Skipping DJVU to PDF conversion")
-                        filename = filename.split('.')[0] + ".pdf"
-                        filetype = filename.split('.')[-1].lower()
-                                                        
-            else:
-                        
-                        message  =  "Found a djvu file. Converting to PDF file. " + "\n\n"
-                        logger.info(message)
-        
-                        command = "ddjvu --format=pdf " +  '"' + filename +  '"' + "   " + '"' +  filename.split('.')[0] + '"' + ".pdf"
-                        os.system(command.encode('utf-8'))
-                        logger.info("Running " + command)
-
-                        filename = filename.split('.')[0] + ".pdf"
-                        filetype = filename.split('.')[-1].lower()
-        
-
-
-if filetype.lower() == "pdf":
-
-	# split the PDF files vertically based on the column numbers
-
-        message =  "Aligining the Pages of PDF file. \n"
-        logger.info(message)
-        command = "mutool poster -x " + str(columns)  + " " + '"' +  filename + '"' +  "  currentfile.pdf"
-        logger.info("Running " + command.encode('utf-8'))
-        
-        os.system(command.encode('utf-8'))
-                
-
-        message =  "Spliting the PDF into single pages. \n"
-        logger.info(message)
-        burst_command = "pdftk currentfile.pdf burst"
-        os.system(burst_command)
-        logger.info("Running " + burst_command) 
-
-        
-        files = []
-        for filename in glob.glob('pg*.pdf'):
-                files.append(filename)
-                files.sort()
-
-        chunks=[files[x:x+int(columns)] for x in xrange(0, len(files), int(columns))]
-
-        counter = 1
-        message =  "Joining the PDF files ...\n"
-        logger.info(message)
-
-        if columns == "1":
-                counter = 1
-                for pdf in files:
-                        command = "cp " + pdf +  " page_" + str(counter).zfill(5) + ".pdf"
-                        logger.info("Running Command " + command)
-                        counter = counter + 1
-                        os.system(command)
-
-
-        if columns == "2":
-
-	        chunks=[files[x:x+int(columns)] for x in xrange(0, len(files), int(columns))]
-
-	        counter = 1
-	        message =  "Joining the PDF files ...\n"
-	        logger.info(message)
-	        
-	        for i in chunks:
-	            com =  ' '.join(i)
-	            command = "pdfunite " + com + " " + "page_" + str(counter).zfill(5) + ".pdf"
-	            logger.info("Running " + command) 
-	            counter = counter + 1
-	            os.system(command)
-                                
-
-        
-
+  
 def move_file(file):
         source = file
         destination = temp_folder
