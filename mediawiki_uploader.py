@@ -14,7 +14,7 @@ import logging
 import urllib2
 
 
-version = "1.59"
+version = "1.60"
 
 config = ConfigParser.ConfigParser()
 config.read("config.ini")
@@ -66,7 +66,8 @@ latest_version =  urllib2.urlopen('https://raw.githubusercontent.com/ravidreams/
 
 if not float(version) == float(latest_version):
             logger.info("\n\nYour OCR4WikiSource version is " + version + ". This is old. The latest version is " + latest_version + ". Update from https://github.com/ravidreams/OCR4wikisource \n\n")
-            sys.exit()
+            command = "git pull https://github.com/ravidreams/OCR4wikisource"
+            os.system(command)
 
 
             
