@@ -15,7 +15,7 @@ import urllib2
 import os.path
 
 
-version = "1.61"
+version = "1.62"
 
 
 config = ConfigParser.ConfigParser()
@@ -56,14 +56,14 @@ logger.addHandler(handler)
 latest_version =  urllib2.urlopen('https://raw.githubusercontent.com/ravidreams/OCR4wikisource/master/VERSION').read().strip('\n').split(' ')[1]
 
 if not float(version) == float(latest_version):
-            logger.info("\n\nYour OCR4WikiSource version is " + version + ". This is old. The latest version is " + latest_version + ". Update from https://github.com/ravidreams/OCR4wikisource \n\n")
+            logger.info("\n\nYour OCR4WikiSource version is " + version + ". This is old. The latest version is " + latest_version + ". Updating from https://github.com/ravidreams/OCR4wikisource \n\n")
             command = "git pull https://github.com/ravidreams/OCR4wikisource"
             os.system(command)
 
 
 
 
-logger.info("Running do_ocr.py " + version)
+logger.info("Running do_ocr_tatkal.py " + latest_version)
 
 
 os_info = open("/etc/lsb-release")
@@ -218,7 +218,7 @@ text_count = len(glob.glob('page_*.txt'))
 
 if not pdf_count == text_count:
 
-            logger.info("\n\n=========ERROR===========\n\n")
+            logger.info("\n\n=========ERROR-TATKAL-1===========\n\n")
             
             for i in range(1,int(pdf_count)+1):
                         txt_file = "page_" + str(i).zfill(5) + ".txt"
@@ -371,12 +371,13 @@ logger.info(message)
 result_text_count = len(glob.glob('text_for_page_*.txt'))
 
 if not pdf_count == result_text_count:
-            logger.info("\n\n=========ERROR===========\n\n")
+            logger.info("\n\n=========ERROR-TATKAL-2===========\n\n")
             logger.info(" \n\nText files are not equal to PDF files. Some PDF files not OCRed. Running this script again to complete OCR all the PDF files \n\n")
             command = "python do_ocr_tatkal.py"
             os.system(command)
 
 if  pdf_count == result_text_count:
+            logger.info("\n\n=========SUCCESS-TATKAL-1===========\n\n")
             logger.info("\n\nThe PDF files and result text files are equal. Now running the mediawiki_uploader.py script\n\n")
             command = "python mediawiki_uploader.py"
             os.system(command)
